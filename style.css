@@ -25,6 +25,6 @@ body {
     margin-bottom: 0;
 }
 
-#open-modal {
+.openModal {
     cursor: pointer;
 }

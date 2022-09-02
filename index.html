@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <header class="container-lg mt-4">
+    <header class="container-xl mt-4">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid fw-bold">
                 <a class="navbar-brand" href="#">NEWS <span class="text-primary">NOW</span></a>
@@ -36,7 +36,7 @@
         <hr>
     </header>
 
-    <main class="container-lg pb-5">
+    <main class="container-xl pb-5">
         <!-- Category list -->
         <section>
             <ul id="category-nav" class="nav nav-pills nav-fill gap-2 flex-row-reverse flex-wrap-reverse fw-bold">
@@ -66,8 +66,32 @@
             <div id="no-news-found-message"
                 class="d-none rounded p-3 my-2 mt-md-3 fw-bold text-center text-danger fs-2">
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="newsDetailsModal" tabindex="-1" aria-labelledby="newsDetailsModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal header -->
+                        <div class="modal-header">
+                            <h5 id="modal-title" class="modal-title" id="newsDetailsModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div id="modal-body" class="modal-body">
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer justify-content-between">
+                            <div id="modal-rating">
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
+
     <footer>
 
     </footer>

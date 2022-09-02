@@ -1,8 +1,12 @@
 const loadCategories = async () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`;
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategoryList(data.data.news_category);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayCategoryList(data.data.news_category);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const displayCategoryList = categories => {
@@ -22,10 +26,13 @@ loadCategories();
 const loadNews = async (categoryId, categoryName) => {
     displayLoader(true);
     const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`
-    const res = await fetch(url);
-    const data = await res.json();
-    console.log(data.data);
-    displayNews(data.data, categoryName);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayNews(data.data, categoryName);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const displayNews = (news, categoryName) => {
@@ -43,6 +50,8 @@ const displayNews = (news, categoryName) => {
     const newsFound = document.getElementById('news-found');
     newsFound.innerHTML = `${news.length} news found in category <span class="text-primary">${categoryName}</span>`
     newsFound.classList.remove('d-none');
+
+    news = news.sort((a, b) => b.total_view - a.total_view);
 
     news.forEach(eachNews => {
         const newsDiv = document.createElement('div');
@@ -69,10 +78,10 @@ const displayNews = (news, categoryName) => {
                                 </div>
                             </div>
                             <div class="text-primary">
-                                <i class="fa-solid fa-eye me-2 fs-5"></i>
+                                <i class="fa-solid fa-eye me-1 fs-5"></i>
                                 <p class="fw-bold d-inline-block mb-0">${eachNews.total_view ? eachNews.total_view : '0'}</p>
                             </div>
-                            <div id="open-modal" class="text-primary">
+                            <div onclick="openNewsModal('${eachNews._id}')" class="text-primary openModal" data-bs-toggle="modal" data-bs-target="#newsDetailsModal">
                                 <i class="fa-solid fa-arrow-right fs-4"></i>
                             </div>
                         </div>
@@ -85,6 +94,42 @@ const displayNews = (news, categoryName) => {
     })
     displayLoader(false);
 }
+
+const openNewsModal = async (newsId) => {
+    const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayNewsModal(data.data[0]);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const displayNewsModal = news => {
+    console.log(news)
+    const modalTitle = document.getElementById('modal-title');
+    modalTitle.innerText = news.title;
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = `
+    <div class="d-flex justify-content-between gap-2">
+        <div>
+            <p class="mb-1"><span class="fw-bold">Author:</span> ${news.author.name ? news.author.name : 'Anonymous'}</p>
+            <p><span class="fw-bold">Date Published:</span> ${news.author.published_date ? news.author.published_date : 'Publish date not found'}</p>
+        </div>
+        <div>
+            <p><span class="fw-bold">Total Views:</span> ${news.total_view ? news.total_view : 'No views'}</p>
+        </div>
+    </div>
+    <p><span class="fw-bold">Description:</span> ${news.details ? news.details : 'Details not found'}</p>
+    `
+    const modalRating = document.getElementById('modal-rating');
+    modalRating.innerHTML = `
+    <p class="mb-0"><span class="fw-bold">Rating:</span> ${news.rating.number ? news.rating.number : 'No rating found'} <span class="badge bg-primary ms-2">${news.rating.badge ? news.rating.badge : 'No badge'}</span>
+</p>
+    `
+}
+
 
 const displayLoader = isTrue => {
     const newsLoader = document.getElementById('news-loader');
