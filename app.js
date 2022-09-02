@@ -12,7 +12,7 @@ const displayCategoryList = categories => {
         const li = document.createElement('li');
         li.classList.add('nav-item');
         li.innerHTML = `
-        <a onclick="loadNews('${category.category_id}')" class="nav-link">${category.category_name}</a>
+        <a onclick="loadNews('${category.category_id}', '${category.category_name}')" class="nav-link">${category.category_name}</a>
         `
         categoryNav.appendChild(li);
     });
@@ -20,25 +20,29 @@ const displayCategoryList = categories => {
 
 loadCategories();
 
-const loadNews = async (categoryId) => {
+const loadNews = async (categoryId, categoryName) => {
     console.log(categoryId)
     const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`
     const res = await fetch(url);
     const data = await res.json();
     console.log(data.data);
-    displayNews(data.data);
+    displayNews(data.data, categoryName);
 }
 
-const displayNews = news => {
+const displayNews = (news, categoryName) => {
     const newsContainer = document.getElementById('news-container');
     newsContainer.innerHTML = '';
+
+    const newsFound = document.getElementById('news-found');
+    newsFound.innerHTML = `${news.length} news found in category <span class="text-primary">${categoryName}</span>`
+    newsFound.classList.remove('d-none');
 
     news.forEach(eachNews => {
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('col');
 
         newsDiv.innerHTML = `
-        <div class="card">
+        <div class="card bg-white">
             <div class="row g-0">
                 <div class="col-md-4">
                     <img src="${eachNews.thumbnail_url}" class="img-fluid rounded w-100 h-100" alt="...">
