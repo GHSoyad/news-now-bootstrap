@@ -8,7 +8,6 @@ const loadCategories = async () => {
 const displayCategoryList = categories => {
     const categoryNav = document.getElementById('category-nav');
     categories.forEach(category => {
-        // console.log(category)
         const li = document.createElement('li');
         li.classList.add('nav-item');
         li.innerHTML = `
@@ -21,7 +20,7 @@ const displayCategoryList = categories => {
 loadCategories();
 
 const loadNews = async (categoryId, categoryName) => {
-    console.log(categoryId)
+    displayLoader(true);
     const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`
     const res = await fetch(url);
     const data = await res.json();
@@ -33,6 +32,14 @@ const displayNews = (news, categoryName) => {
     const newsContainer = document.getElementById('news-container');
     newsContainer.innerHTML = '';
 
+    const noNewsFound = document.getElementById('no-news-found-message');
+    if (news.length === 0) {
+        noNewsFound.classList.remove('d-none');
+        noNewsFound.innerHTML = `<p>No News Found in ${categoryName}</p>`
+    } else {
+        noNewsFound.classList.add('d-none');
+    }
+
     const newsFound = document.getElementById('news-found');
     newsFound.innerHTML = `${news.length} news found in category <span class="text-primary">${categoryName}</span>`
     newsFound.classList.remove('d-none');
@@ -42,7 +49,7 @@ const displayNews = (news, categoryName) => {
         newsDiv.classList.add('col');
 
         newsDiv.innerHTML = `
-        <div class="card bg-white">
+        <div class="card bg-white h-100">
             <div class="row g-0">
                 <div class="col-md-4">
                     <img src="${eachNews.thumbnail_url}" class="img-fluid rounded w-100 h-100" alt="...">
@@ -76,6 +83,14 @@ const displayNews = (news, categoryName) => {
         `
         newsContainer.appendChild(newsDiv);
     })
+    displayLoader(false);
+}
 
-
+const displayLoader = isTrue => {
+    const newsLoader = document.getElementById('news-loader');
+    if (isTrue) {
+        newsLoader.classList.remove('d-none');
+    } else {
+        newsLoader.classList.add('d-none');
+    }
 }
