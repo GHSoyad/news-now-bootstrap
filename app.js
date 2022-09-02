@@ -41,13 +41,30 @@ const displayNews = news => {
         <div class="card">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="${eachNews.thumbnail_url}" class="img-fluid rounded-start" alt="...">
+                    <img src="${eachNews.thumbnail_url}" class="img-fluid rounded w-100 h-100" alt="...">
                 </div>
                 <div class="col-md-8">
-                    <div class="card-body">
+                    <div class="card-body h-100 d-flex flex-column justify-content-between">
                         <h5 class="card-title">${eachNews.title}</h5>
                         <p class="card-text">${eachNews.details.slice(0, 180)}...</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                            <div class="author-info d-flex">
+                                <div>
+                                   <img src="${eachNews.author.img}" class="img-fluid" alt="">
+                                </div>
+                                <div>
+                                    <p class="fw-bold">${eachNews.author.name ? eachNews.author.name : 'No Author'}</p>
+                                    <p>${eachNews.author.published_date ? eachNews.author.published_date : 'No publish date'}</p>
+                                </div>
+                            </div>
+                            <div class="text-primary">
+                                <i class="fa-solid fa-eye me-2 fs-5"></i>
+                                <p class="fw-bold d-inline-block mb-0">${eachNews.total_view ? eachNews.total_view : '0'}</p>
+                            </div>
+                            <div id="open-modal" class="text-primary">
+                                <i class="fa-solid fa-arrow-right fs-4"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
