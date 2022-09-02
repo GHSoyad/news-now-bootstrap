@@ -8,14 +8,22 @@ const loadCategories = async () => {
 const displayNews = categories => {
     const categoryNav = document.getElementById('category-nav');
     categories.forEach(category => {
-        console.log(category)
+        // console.log(category)
         const li = document.createElement('li');
         li.classList.add('nav-item');
         li.innerHTML = `
-        <a class="nav-link">${category.category_name}</a>
+        <a onclick="loadNews('${category.category_id}')" class="nav-link">${category.category_name}</a>
         `
         categoryNav.appendChild(li);
     });
 }
 
 loadCategories();
+
+const loadNews = async (categoryId) => {
+    console.log(categoryId)
+    const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.data);
+}
