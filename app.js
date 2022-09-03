@@ -127,14 +127,20 @@ const displayNewsModal = news => {
 
     const modalBody = document.getElementById('modal-body');
     modalBody.innerHTML = `
-    <div class="d-flex justify-content-between gap-2">
-        <div>
-            <p class="mb-1"><span class="fw-bold">Author:</span> ${news.author.name ? news.author.name : 'Anonymous'}</p>
-            <p><span class="fw-bold">Date Published:</span> ${news.author.published_date ? news.author.published_date : 'Publish date not found'}</p>
+    <div class="d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex align-items-center">
+            <div class="author-info">
+                <img src="${news.author.img ? news.author.img : 'No author image'}" class="img-fluid author" alt="">
+            </div>
+            <p class="m-0"><span class="fw-bold">Author:</span> ${news.author.name ? news.author.name : 'Anonymous'}</p>
         </div>
         <div>
-            <p><span class="fw-bold">Total Views:</span> ${news.total_view ? news.total_view : 'No views'}</p>
+            <p class="m-0"><span class="fw-bold">Total Views:</span> ${news.total_view ? news.total_view : 'No views'}</p>
         </div>
+    </div>
+    <p class="mt-2"><span class="fw-bold">Date Published:</span> ${news.author.published_date ? news.author.published_date : 'Publish date not found'}</p>
+    <div class="news-image mb-3">
+        <img src="${news.image_url ? news.image_url : 'No news image'}" class="img-fluid author" alt="">
     </div>
     <p><span class="fw-bold">Description:</span> ${news.details ? news.details : 'Details not found'}</p>
     `
