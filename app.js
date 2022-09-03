@@ -62,9 +62,9 @@ const displayNews = (news, categoryName) => {
     }
 
     // Sort news list by views
-    news = news.sort((a, b) => b.total_view - a.total_view);
+    let sortedNews = news.sort((a, b) => b.total_view - a.total_view);
 
-    news.forEach(eachNews => {
+    sortedNews.forEach(eachNews => {
         const newsDiv = document.createElement('div');
         newsDiv.classList.add('col');
 
@@ -78,7 +78,7 @@ const displayNews = (news, categoryName) => {
                     <div class="card-body h-100 d-flex flex-column justify-content-between">
                         <h5 class="card-title fw-bold">${eachNews.title}</h5>
                         <p class="card-text">${eachNews.details.slice(0, 150)}...</p>
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-4">
                             <div class="author-info d-flex">
                                 <div>
                                    <img src="${eachNews.author.img}" class="img-fluid" alt="">
@@ -88,12 +88,14 @@ const displayNews = (news, categoryName) => {
                                     <p>${eachNews.author.published_date ? eachNews.author.published_date : 'No publish date'}</p>
                                 </div>
                             </div>
-                            <div class="text-primary">
-                                <i class="fa-solid fa-eye me-1 fs-5"></i>
-                                <p class="fw-bold d-inline-block mb-0">${eachNews.total_view ? eachNews.total_view : '0'}</p>
-                            </div>
-                            <div onclick="openNewsModal('${eachNews._id}')" class="text-primary openModal" data-bs-toggle="modal" data-bs-target="#newsDetailsModal">
-                                <i class="fa-solid fa-arrow-right fs-4"></i>
+                            <div class="d-flex">
+                                <div class="text-primary me-5">
+                                    <i class="fa-solid fa-eye me-1 fs-5"></i>
+                                    <p class="fw-bold d-inline-block mb-0">${eachNews.total_view ? eachNews.total_view : '0'}</p>
+                                </div>
+                                <div onclick="openNewsModal('${eachNews._id}')" class="text-primary openModal" data-bs-toggle="modal" data-bs-target="#newsDetailsModal">
+                                    <i class="fa-solid fa-arrow-right fs-4"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
